@@ -3,12 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Number phrase</title>
+    <title>Numbers to words</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
 
     <script src="src/number-to-phrase.js" defer></script>
     <script src="src/index.js" defer></script>
+
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="title">
+      <h1>Numbers to words</h1>
+    </div>
+
     <form>
       <input
         type="number"
@@ -20,6 +32,6 @@
       <button type="submit" id="submit">Submit</button>
     </form>
 
-    <p id="output"></p>
+    <p class="output"></p>
   </body>
 </html>
