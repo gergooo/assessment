@@ -54,7 +54,9 @@ const TENS_AND_ONES_SEPARATOR = '-';
 function getNumberPhrase(number) {
   let numberPhrase;
 
-  if (number === 0) {
+  if (number > 999999999999999) {
+    return null;
+  } else if (number === 0) {
     numberPhrase = ZERO;
   } else if (number > 1000 && number < 2000) {
     numberPhrase = convertYearsBefore2000(number);

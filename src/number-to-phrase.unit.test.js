@@ -1,4 +1,6 @@
-require('chai').should();
+const chai = require('chai');
+const expect = chai.expect;
+chai.should();
 
 const { getNumberPhrase } = require('./number-to-phrase');
 
@@ -153,5 +155,10 @@ describe('Number to phrase - unit tests', function () {
           'nine hundred and ninety-nine'
       );
     });
+  });
+
+  it('too large input', function () {
+    expect(getNumberPhrase(999999999999999 + 1)).to.be.null;
+    expect(getNumberPhrase(999999999999999 + 6546)).to.be.null;
   });
 });
