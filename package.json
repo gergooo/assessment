@@ -1,0 +1,17 @@
+{
+  "name": "js-numerals",
+  "version": "1.0.0",
+  "description": "Web app for converting arabic numbers to their English phrases.",
+  "main": "index.js",
+  "scripts": {
+    "tdd": "mocha **/*.test.js -watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gergő Ábrahám (abrahamgergo@gmail.com)",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^7.17.0",
+    "mocha": "^8.2.1"
+  }
+}
