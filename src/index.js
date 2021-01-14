@@ -1,3 +1,5 @@
+'use strict';
+
 const inputElement = document.getElementById('input');
 const outputElement = document.getElementsByClassName('output')[0];
 const submitButton = document.getElementById('submit');

@@ -1,8 +1,10 @@
+'use strict';
+
 const chai = require('chai');
 const expect = chai.expect;
 chai.should();
 
-const { getNumberPhrase } = require('./number-to-phrase');
+const { getNumberPhrase } = require('../src/number-to-phrase');
 
 describe('Number to phrase - unit tests', function () {
   context('below 1000', function () {
