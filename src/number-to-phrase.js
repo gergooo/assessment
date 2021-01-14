@@ -37,20 +37,48 @@ const tenMultiples = {
 };
 
 function getNumberPhrase(number) {
+  let numberPhrase;
+
   if (number === 0) {
-    return 'zero';
+    numberPhrase = 'zero';
+  } else if (number > 1000 && number < 2000) {
+    numberPhrase = convertYearsBefore2000(number);
+  } else {
+    numberPhrase = convertGeneralNumbers(number);
   }
 
+  return numberPhrase;
+}
+
+function convertYearsBefore2000(number) {
+  const hundredsAndThousandsDigits = (number - (number % 100)) / 100;
+
+  const hundredsAndThousands =
+    convertTensAndOnes(hundredsAndThousandsDigits) + ' hundred';
+  const onesAndTens = convertTensAndOnes(number);
+
+  return combineStrings(hundredsAndThousands, ' and ', onesAndTens);
+}
+
+function convertGeneralNumbers(number) {
+  const groupOfThousandsDigits = (number - (number % 1000)) / 1000;
+  const belowMillion =
+    number > 999 && convertThousandsGroup(groupOfThousandsDigits) + ' thousand';
+
+  const belowThousand = convertThousandsGroup(number % 1000);
+
+  return combineStrings(belowMillion, ', ', belowThousand);
+}
+
+function convertThousandsGroup(number) {
   const hundreds = convertHundreds(number);
   const onesAndTens = convertTensAndOnes(number);
-  let result = combineStrings(hundreds, ' and ', onesAndTens);
 
-  return result;
+  return combineStrings(hundreds, ' and ', onesAndTens);
 }
 
 function convertHundreds(number) {
   const hundredsDigit = (number - (number % 100)) / 100;
-
   return hundredsDigit !== 0 ? `${digits[hundredsDigit]} hundred` : '';
 }
 
