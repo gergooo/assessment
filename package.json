@@ -4,14 +4,17 @@
   "description": "Web app for converting arabic numbers to their English phrases.",
   "main": "index.js",
   "scripts": {
-    "tdd": "mocha **/*.test.js -watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tdd": "mocha tests/*.unit.test.js -watch",
+    "test:unit": "mocha tests/*.unit.test.js",
+    "test:e2e": "mocha tests/e2e.test.js -watch --timeout 120000"
   },
   "author": "Gergő Ábrahám (abrahamgergo@gmail.com)",
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^7.17.0",
-    "mocha": "^8.2.1"
+    "geckodriver": "^1.21.1",
+    "mocha": "^8.2.1",
+    "selenium-webdriver": "^4.0.0-alpha.8"
   }
 }

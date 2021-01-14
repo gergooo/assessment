@@ -18,7 +18,7 @@ submitButton.addEventListener('click', (event) => {
       (number > 0 ? 'smaller' : 'larger') +
       ' than ' +
       (number > 0 ? '' : '-') +
-      '999,999,999,999,999';
+      '999,999,999,999,999.';
   } else {
     outputElement.textContent = getNumberPhrase(number) || errorMessage;
   }
