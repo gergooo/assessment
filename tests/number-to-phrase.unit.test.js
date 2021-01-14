@@ -48,11 +48,8 @@ describe('Number to phrase - unit tests', function () {
 
       it('twenties and above', function () {
         getNumberPhrase(21).should.equal('twenty-one');
-        getNumberPhrase(23).should.equal('twenty-three');
-        getNumberPhrase(35).should.equal('thirty-five');
-        getNumberPhrase(59).should.equal('fifty-nine');
         getNumberPhrase(64).should.equal('sixty-four');
-        getNumberPhrase(98).should.equal('ninety-eight');
+        getNumberPhrase(99).should.equal('ninety-nine');
       });
     });
 
@@ -161,9 +158,10 @@ describe('Number to phrase - unit tests', function () {
 
   it('too large/small input', function () {
     expect(getNumberPhrase(999999999999999 + 1)).to.be.null;
-    expect(getNumberPhrase(-999999999999999 - 1)).to.be.null;
-
     expect(getNumberPhrase(999999999999999 + 6546)).to.be.null;
+
+    expect(getNumberPhrase(-999999999999999 - 1)).to.be.null;
+    expect(getNumberPhrase(-999999999999999 - 2462)).to.be.null;
   });
 
   it('negative numbers', function () {
