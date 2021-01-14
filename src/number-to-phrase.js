@@ -1,4 +1,6 @@
-module.exports = { getNumberPhrase };
+if (typeof module !== 'undefined') {
+  module.exports = { getNumberPhrase };
+}
 
 const DIGITS = {
   1: 'one',
