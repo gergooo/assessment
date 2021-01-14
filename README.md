@@ -1,6 +1,6 @@
 # JavaScript/Front-end Developer - Exercise 1
 
-This is my homework for [Digital Natives](www.digitalnatives.hu).
+This is my homework for [Digital Natives](https://www.digitalnatives.hu).
 
 [Click here to see it in action!](https://gergooo.github.io/numbers-to-words/)
 
