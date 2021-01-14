@@ -16,8 +16,7 @@ describe('Number to phrase - unit tests', function () {
     getNumberPhrase(9).should.equal('nine');
   });
 
-  it('numbers below twenty', function () {
-    getNumberPhrase(10).should.equal('ten');
+  it('numbers from 11 to 19', function () {
     getNumberPhrase(11).should.equal('eleven');
     getNumberPhrase(12).should.equal('twelve');
     getNumberPhrase(13).should.equal('thirteen');
@@ -29,8 +28,9 @@ describe('Number to phrase - unit tests', function () {
     getNumberPhrase(19).should.equal('nineteen');
   });
 
-  context('numbers from 20 to 100', function () {
+  context('numbers from 20 to 99', function () {
     it('multiples of 10', function () {
+      getNumberPhrase(10).should.equal('ten');
       getNumberPhrase(20).should.equal('twenty');
       getNumberPhrase(30).should.equal('thirty');
       getNumberPhrase(40).should.equal('forty');
@@ -48,6 +48,21 @@ describe('Number to phrase - unit tests', function () {
       getNumberPhrase(59).should.equal('fifty-nine');
       getNumberPhrase(64).should.equal('sixty-four');
       getNumberPhrase(98).should.equal('ninety-eight');
+    });
+  });
+
+  context('numbers from 100 to 999', function () {
+    it('multiples of 100', function () {
+      getNumberPhrase(100).should.equal('one hundred');
+      getNumberPhrase(300).should.equal('three hundred');
+      getNumberPhrase(900).should.equal('nine hundred');
+    });
+
+    it('hundred somethings', function () {
+      getNumberPhrase(101).should.equal('one hundred and one');
+      getNumberPhrase(111).should.equal('one hundred and eleven');
+      getNumberPhrase(236).should.equal('two hundred and thirty-six');
+      getNumberPhrase(999).should.equal('nine hundred and ninety-nine');
     });
   });
 });
