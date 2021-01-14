@@ -50,21 +50,25 @@ const HUNDRED = 'hundred';
 const THOUSANDS_GROUP_SEPARATOR = ' ';
 const HUNDREDS_AND_TENS_SEPARATOR = ' and ';
 const TENS_AND_ONES_SEPARATOR = '-';
+const MINUS = 'minus';
 
 function getNumberPhrase(number) {
+  const absoluteValue = Math.abs(number);
   let numberPhrase;
 
-  if (number > 999999999999999) {
+  if (absoluteValue > 999999999999999) {
     return null;
-  } else if (number === 0) {
+  } else if (absoluteValue === 0) {
     numberPhrase = ZERO;
-  } else if (number > 1000 && number < 2000) {
-    numberPhrase = convertYearsBefore2000(number);
+  } else if (absoluteValue > 1000 && absoluteValue < 2000) {
+    numberPhrase = convertYearsBefore2000(absoluteValue);
   } else {
-    numberPhrase = convertGeneralNumbers(number);
+    numberPhrase = convertGeneralNumbers(absoluteValue);
   }
 
-  return numberPhrase;
+  const negativePrefix = number < 0 ? MINUS + ' ' : '';
+
+  return negativePrefix + numberPhrase;
 }
 
 function convertYearsBefore2000(number) {

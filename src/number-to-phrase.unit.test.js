@@ -157,8 +157,18 @@ describe('Number to phrase - unit tests', function () {
     });
   });
 
-  it('too large input', function () {
+  it('too large/small input', function () {
     expect(getNumberPhrase(999999999999999 + 1)).to.be.null;
+    expect(getNumberPhrase(-999999999999999 - 1)).to.be.null;
+
     expect(getNumberPhrase(999999999999999 + 6546)).to.be.null;
+  });
+
+  it('negative numbers', function () {
+    getNumberPhrase(-1).should.equal('minus one');
+    getNumberPhrase(-2368).should.equal(
+      'minus two thousand three hundred and sixty-eight'
+    );
+    getNumberPhrase(-1940).should.equal('minus nineteen hundred and forty');
   });
 });
