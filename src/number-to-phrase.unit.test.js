@@ -92,20 +92,66 @@ describe('Number to phrase - unit tests', function () {
     });
 
     it('combining with ones, tens, hundreds', function () {
-      getNumberPhrase(2001).should.equal('two thousand, one');
+      getNumberPhrase(2001).should.equal('two thousand one');
       getNumberPhrase(5678).should.equal(
-        'five thousand, six hundred and seventy-eight'
+        'five thousand six hundred and seventy-eight'
       );
       getNumberPhrase(666666).should.equal(
-        'six hundred and sixty-six thousand, six hundred and sixty-six'
+        'six hundred and sixty-six thousand six hundred and sixty-six'
       );
-      getNumberPhrase(900013).should.equal('nine hundred thousand, thirteen');
+      getNumberPhrase(900013).should.equal('nine hundred thousand thirteen');
     });
 
-    it('hundred thousands - from 1001 to 1999, British style', function () {
+    it('hundred thousands - from 1001 to 1999 British style', function () {
       getNumberPhrase(1001).should.equal('ten hundred and one');
       getNumberPhrase(1541).should.equal('fifteen hundred and forty-one');
       getNumberPhrase(1999).should.equal('nineteen hundred and ninety-nine');
+    });
+  });
+
+  context('above million!', function () {
+    it('millions', function () {
+      getNumberPhrase(1000000).should.equal('one million');
+      getNumberPhrase(123456789).should.equal(
+        'one hundred and twenty-three million ' +
+          'four hundred and fifty-six thousand ' +
+          'seven hundred and eighty-nine'
+      );
+      getNumberPhrase(900000013).should.equal('nine hundred million thirteen');
+    });
+
+    it('billions', function () {
+      getNumberPhrase(1000000000).should.equal('one billion');
+      getNumberPhrase(330100023300).should.equal(
+        'three hundred and thirty billion ' +
+          'one hundred million ' +
+          'twenty-three thousand ' +
+          'three hundred'
+      );
+      getNumberPhrase(999999999999).should.equal(
+        'nine hundred and ninety-nine billion ' +
+          'nine hundred and ninety-nine million ' +
+          'nine hundred and ninety-nine thousand ' +
+          'nine hundred and ninety-nine'
+      );
+    });
+
+    it('trillions', function () {
+      getNumberPhrase(1000000000000).should.equal('one trillion');
+      getNumberPhrase(330100023300602).should.equal(
+        'three hundred and thirty trillion ' +
+          'one hundred billion ' +
+          'twenty-three million ' +
+          'three hundred thousand ' +
+          'six hundred and two'
+      );
+      getNumberPhrase(999999999999999).should.equal(
+        'nine hundred and ninety-nine trillion ' +
+          'nine hundred and ninety-nine billion ' +
+          'nine hundred and ninety-nine million ' +
+          'nine hundred and ninety-nine thousand ' +
+          'nine hundred and ninety-nine'
+      );
     });
   });
 });

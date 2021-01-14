@@ -1,6 +1,6 @@
 module.exports = { getNumberPhrase };
 
-const digits = {
+const DIGITS = {
   1: 'one',
   2: 'two',
   3: 'three',
@@ -12,7 +12,7 @@ const digits = {
   9: 'nine',
 };
 
-const numbersFrom11to19 = {
+const NUMBERS_FROM_11_TO_19 = {
   11: 'eleven',
   12: 'twelve',
   13: 'thirteen',
@@ -24,7 +24,7 @@ const numbersFrom11to19 = {
   19: 'nineteen',
 };
 
-const tenMultiples = {
+const TEN_MULTIPLES = {
   1: 'ten',
   2: 'twenty',
   3: 'thirty',
@@ -36,11 +36,26 @@ const tenMultiples = {
   9: 'ninety',
 };
 
+const THOUSANDS_GROUP_NAMES = [
+  '',
+  'thousand',
+  'million',
+  'billion',
+  'trillion',
+];
+
+const ZERO = 'zero';
+const HUNDRED = 'hundred';
+
+const THOUSANDS_GROUP_SEPARATOR = ' ';
+const HUNDREDS_AND_TENS_SEPARATOR = ' and ';
+const TENS_AND_ONES_SEPARATOR = '-';
+
 function getNumberPhrase(number) {
   let numberPhrase;
 
   if (number === 0) {
-    numberPhrase = 'zero';
+    numberPhrase = ZERO;
   } else if (number > 1000 && number < 2000) {
     numberPhrase = convertYearsBefore2000(number);
   } else {
@@ -51,55 +66,89 @@ function getNumberPhrase(number) {
 }
 
 function convertYearsBefore2000(number) {
-  const hundredsAndThousandsDigits = (number - (number % 100)) / 100;
+  const thousandsAndHundredsDigits = Math.floor(number / 100);
 
-  const hundredsAndThousands =
-    convertTensAndOnes(hundredsAndThousandsDigits) + ' hundred';
-  const onesAndTens = convertTensAndOnes(number);
+  const thousandsAndHundreds =
+    convertTensAndOnes(thousandsAndHundredsDigits) + ' ' + HUNDRED;
+  const tensAndOnes = convertTensAndOnes(number);
 
-  return combineStrings(hundredsAndThousands, ' and ', onesAndTens);
+  return combineStrings(
+    thousandsAndHundreds,
+    HUNDREDS_AND_TENS_SEPARATOR,
+    tensAndOnes
+  );
 }
 
 function convertGeneralNumbers(number) {
-  const groupOfThousandsDigits = (number - (number % 1000)) / 1000;
-  const belowMillion =
-    number > 999 && convertThousandsGroup(groupOfThousandsDigits) + ' thousand';
+  let numberPhrase = '';
+  let i = 0;
 
-  const belowThousand = convertThousandsGroup(number % 1000);
+  do {
+    const thousandsGroup = convertSmallestThousandsGroup(
+      number,
+      THOUSANDS_GROUP_NAMES[i]
+    );
 
-  return combineStrings(belowMillion, ', ', belowThousand);
+    numberPhrase = combineStrings(
+      thousandsGroup,
+      THOUSANDS_GROUP_SEPARATOR,
+      numberPhrase
+    );
+
+    number = Math.floor(number / 1000);
+    i++;
+  } while (number);
+
+  return numberPhrase;
 }
 
-function convertThousandsGroup(number) {
-  const hundreds = convertHundreds(number);
-  const onesAndTens = convertTensAndOnes(number);
+function convertSmallestThousandsGroup(number, name) {
+  let groupWithName = null;
+  const lastThreeDigits = number % 1000;
 
-  return combineStrings(hundreds, ' and ', onesAndTens);
+  if (lastThreeDigits) {
+    const hundreds = convertHundreds(lastThreeDigits);
+    const onesAndTens = convertTensAndOnes(lastThreeDigits);
+
+    const group = combineStrings(
+      hundreds,
+      HUNDREDS_AND_TENS_SEPARATOR,
+      onesAndTens
+    );
+    groupWithName = combineStrings(group, ' ', name);
+  }
+
+  return groupWithName;
 }
 
 function convertHundreds(number) {
-  const hundredsDigit = (number - (number % 100)) / 100;
-  return hundredsDigit !== 0 ? `${digits[hundredsDigit]} hundred` : '';
+  const hundredsDigit = Math.floor(number / 100);
+
+  return hundredsDigit !== 0 ? `${DIGITS[hundredsDigit]} ${HUNDRED}` : '';
 }
 
 function convertTensAndOnes(number) {
-  const onesAndTens = number % 100;
+  const tensAndOnes = number % 100;
 
   let tensString;
 
-  if (onesAndTens > 10 && onesAndTens < 20) {
-    tensString = numbersFrom11to19[onesAndTens];
-  } else if (onesAndTens) {
-    const ones = onesAndTens % 10;
-    const tens = onesAndTens >= 10 ? (onesAndTens - ones) / 10 : 0;
+  if (tensAndOnes > 10 && tensAndOnes < 20) {
+    tensString = NUMBERS_FROM_11_TO_19[tensAndOnes];
+  } else if (tensAndOnes) {
+    const tens = Math.floor(tensAndOnes / 10);
+    const ones = tensAndOnes % 10;
 
-    tensString = combineStrings(tenMultiples[tens], '-', digits[ones]);
+    tensString = combineStrings(
+      TEN_MULTIPLES[tens],
+      TENS_AND_ONES_SEPARATOR,
+      DIGITS[ones]
+    );
   }
 
   return tensString;
 }
 
-function combineStrings(first, combinator, second) {
+function combineStrings(first, combinator = '', second = '') {
   let result;
 
   if (first && second) {
