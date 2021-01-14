@@ -6,7 +6,8 @@
   "scripts": {
     "tdd": "mocha tests/*.unit.test.js -watch",
     "test:unit": "mocha tests/*.unit.test.js",
-    "test:e2e": "mocha tests/e2e.test.js -watch --timeout 120000"
+    "test:e2e": "mocha tests/e2e.test.js --timeout 120000",
+    "test": "npm run test:unit && npm run test:e2e"
   },
   "author": "Gergő Ábrahám (abrahamgergo@gmail.com)",
   "license": "ISC",
