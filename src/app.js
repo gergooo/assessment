@@ -4,7 +4,10 @@ const PORT = process.env.port || 3000;
 const app = express();
 
 app.get('/todos', (req, res) => {
+  res.status(200);
   res.json({ todos: 'nope' });
 });
 
-app.listen(PORT);
+const server = app.listen(PORT);
+
+module.exports = { server };
