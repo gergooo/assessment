@@ -24,7 +24,7 @@ describe('DELETE /todos/:id', function () {
         res.should.have.status(200);
         res.body.should.contain({ message: 'Todo is deleted.' });
 
-        chai.expect(collection.getTodo(id)).to.be.undefined;
+        chai.expect(collection.getTodo(id)).to.not.exist;
 
         return chai
           .request(server)

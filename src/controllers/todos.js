@@ -1,5 +1,8 @@
 const Todo = require('../models/Todo');
-
+const {
+  scheduleForDeletion,
+  cancelDeletionSchedule,
+} = require('../services/removing-finished-todos');
 class TodosController {
   static getAllTodos(req, res) {
     res.json(Todo.getAll());
@@ -16,6 +19,10 @@ class TodosController {
     }
 
     const newTodo = Todo.new(text, priority, done);
+
+    if (done) {
+      scheduleForDeletion(newTodo.id);
+    }
 
     res.status(201).json(newTodo);
   }
@@ -49,6 +56,13 @@ class TodosController {
     }
 
     const updatedTodo = { ...todo, ...req.body };
+
+    if (updatedTodo.done && !todo.done) {
+      scheduleForDeletion(todo.id);
+    } else if (!updatedTodo.done && todo.done) {
+      cancelDeletionSchedule(todo.id);
+    }
+
     Todo.update(updatedTodo);
     res.status(200).json(updatedTodo);
   }

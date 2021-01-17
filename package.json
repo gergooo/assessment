@@ -17,6 +17,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@sinonjs/fake-timers": "^7.0.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "eslint": "^7.18.0",
