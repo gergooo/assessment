@@ -6,7 +6,7 @@ const collectionName = `./collection-storage/${COLLECTION}.json`;
 
 fs.existsSync('./collection-storage') || fs.mkdirSync('./collection-storage');
 
-const collection = fs.existsSync(collectionName)
+let collection = fs.existsSync(collectionName)
   ? JSON.parse(fs.readFileSync(collectionName))
   : [];
 
@@ -34,9 +34,28 @@ class Todo {
   }
 
   static update(todo) {
-    const index = collection.findIndex((item) => item.id === todo.id);
-    collection[index] = todo;
-    this._persist(collection);
+    const index = Todo._findIndex(todo.id);
+
+    if (index > -1) {
+      collection[index] = todo;
+      this._persist(collection);
+    }
+  }
+
+  static delete(id) {
+    const index = Todo._findIndex(id);
+
+    if (index > -1) {
+      collection = [
+        ...collection.slice(0, index),
+        ...collection.slice(index + 1),
+      ];
+      this._persist(collection);
+    }
+  }
+
+  static _findIndex(id) {
+    return collection.findIndex((todo) => todo.id === id);
   }
 
   static _persist(collection) {

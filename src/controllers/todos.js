@@ -53,6 +53,17 @@ class TodosController {
     res.status(200).json(updatedTodo);
   }
 
+  static deleteTodo(req, res) {
+    if (!Todo.get(req.params.id)) {
+      return res
+        .status(404)
+        .json({ message: 'Todo not found with the given id.' });
+    }
+
+    Todo.delete(req.params.id);
+    res.status(200).json({ message: 'Todo is deleted.' });
+  }
+
   static _isBodyEmpty(body) {
     return Object.keys(body).length === 0;
   }
