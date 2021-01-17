@@ -1,12 +1,10 @@
 const express = require('express');
+const todosRoutes = require('./routes/todos');
 
-const PORT = process.env.port || 3000;
+const PORT = process.env.PORT || 3000;
 const app = express();
 
-app.get('/todos', (req, res) => {
-  res.status(200);
-  res.json({ todos: 'nope' });
-});
+app.use('/todos', todosRoutes);
 
 const server = app.listen(PORT);
 
