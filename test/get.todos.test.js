@@ -1,17 +1,10 @@
-const { startServer, chai } = require('./setup');
-const { CollectionWrapper } = require('./CollectionWrapper');
+const { startServer, chai, collection } = require('./setup');
 
 describe('GET /todos', function () {
   let server;
 
   before(function () {
-    const collectionName = 'todos-test';
-
-    new CollectionWrapper(collectionName, [
-      { id: 1, text: 'do the 1st assessment', priority: 1, done: false },
-      { id: 2, text: 'do the 2nd assessment', priority: 2, done: false },
-    ]);
-    server = startServer(collectionName);
+    server = startServer();
   });
 
   it('returns status code 200', function () {
@@ -30,10 +23,8 @@ describe('GET /todos', function () {
       .then((res) => {
         res.should.be.json;
 
-        res.body.should.deep.equal([
-          { id: 1, text: 'do the 1st assessment', priority: 1, done: false },
-          { id: 2, text: 'do the 2nd assessment', priority: 2, done: false },
-        ]);
+        res.body.should.be.an('array');
+        res.body.should.deep.equal(collection.getTodos());
       });
   });
 

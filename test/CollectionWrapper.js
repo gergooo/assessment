@@ -10,6 +10,10 @@ class CollectionWrapper {
     fs.writeFileSync(this.collection, JSON.stringify(content));
   }
 
+  getTodos() {
+    return JSON.parse(fs.readFileSync(this.collection));
+  }
+
   getTodo(id) {
     const collection = JSON.parse(fs.readFileSync(this.collection));
 

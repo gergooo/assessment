@@ -1,16 +1,10 @@
 const { startServer, chai } = require('./setup');
-const { CollectionWrapper } = require('./CollectionWrapper');
 
 describe('GET /todos/:id', function () {
   let server;
 
   before(function () {
-    const collectionName = 'todos-test';
-    new CollectionWrapper(collectionName, [
-      { id: '1', text: 'do the 1st assessment', priority: 1, done: false },
-      { id: '2', text: 'do the 2nd assessment', priority: 2, done: false },
-    ]);
-    server = startServer(collectionName);
+    server = startServer();
   });
 
   it('returns status code 200 if found', function () {

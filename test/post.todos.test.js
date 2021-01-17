@@ -1,14 +1,10 @@
-const { startServer, chai } = require('./setup');
-const { CollectionWrapper } = require('./CollectionWrapper');
+const { startServer, chai, collection } = require('./setup');
 
 describe('POST /todos', function () {
   let server;
-  let collection;
 
   before(function () {
-    const collectionName = 'todos-test';
-    collection = new CollectionWrapper(collectionName);
-    server = startServer(collectionName);
+    server = startServer();
   });
 
   it('returns the new todo in JSON format', function () {
