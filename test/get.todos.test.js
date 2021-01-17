@@ -1,9 +1,4 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-chai.should();
-chai.use(chaiHttp);
-
-const { startServer } = require('./setup');
+const { startServer, chai } = require('./setup');
 const { CollectionWrapper } = require('./CollectionWrapper');
 
 describe('GET /todos', function () {

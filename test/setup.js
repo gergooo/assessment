@@ -1,3 +1,8 @@
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+chai.should();
+chai.use(chaiHttp);
+
 let server;
 
 function startServer(collection) {
@@ -9,4 +14,4 @@ function startServer(collection) {
   return server;
 }
 
-module.exports = { startServer };
+module.exports = { startServer, chai };

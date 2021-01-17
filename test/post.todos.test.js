@@ -1,10 +1,5 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const { startServer } = require('./setup');
+const { startServer, chai } = require('./setup');
 const { CollectionWrapper } = require('./CollectionWrapper');
-
-chai.should();
-chai.use(chaiHttp);
 
 describe('POST /todos', function () {
   let server;
