@@ -3,7 +3,12 @@ const uuid = require('uuid').v4;
 
 const COLLECTION = process.env.collection || 'todos';
 const collectionName = `./collection-storage/${COLLECTION}.json`;
-const collection = JSON.parse(fs.readFileSync(collectionName));
+
+fs.existsSync('./collection-storage') || fs.mkdirSync('./collection-storage');
+
+const collection = fs.existsSync(collectionName)
+  ? JSON.parse(fs.readFileSync(collectionName))
+  : [];
 
 class Todo {
   static getAll() {
