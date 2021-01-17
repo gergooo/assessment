@@ -2,7 +2,7 @@
   "name": "node-todo",
   "version": "1.0.0",
   "scripts": {
-    "local": "nodemon src/app.js",
+    "local": "nodemon src/app.js --ignore *.json",
     "test": "mocha --watch"
   },
   "repository": {
