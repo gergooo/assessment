@@ -15,6 +15,10 @@ class Todo {
     return collection;
   }
 
+  static get(id) {
+    return collection.find((todo) => todo.id === id);
+  }
+
   static new(text, priority = 3, done = false) {
     const newTodo = {
       id: uuid(),

@@ -17,6 +17,16 @@ class TodosController {
     res.status(201).json(newTodo);
   }
 
+  static getTodo(req, res) {
+    const todo = Todo.get(req.params.id);
+
+    if (todo) {
+      res.status(200).send(todo);
+    } else {
+      res.status(404).json({ message: 'Todo not found with the given id.' });
+    }
+  }
+
   static _isInputInvalid(body) {
     const { text, priority, done } = body;
 
