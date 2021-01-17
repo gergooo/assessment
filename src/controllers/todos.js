@@ -6,10 +6,38 @@ class TodosController {
   }
 
   static createNewTodo(req, res) {
-    const newTodo = Todo.new(req.body.text, req.body.priority, req.body.done);
+    const { text, priority, done } = req.body;
 
-    res.status(201);
-    res.json(newTodo);
+    if (TodosController._isInputInvalid(req.body)) {
+      return res.status(400).send({ message: 'Invalid input.' });
+    }
+
+    const newTodo = Todo.new(text, priority, done);
+
+    res.status(201).json(newTodo);
+  }
+
+  static _isInputInvalid(body) {
+    const { text, priority, done } = body;
+
+    const isTextInvalid = !text || text.match(/[^a-zA-Z 0-9]/);
+
+    const isPriorityInvalid =
+      priority !== undefined &&
+      (isNaN(priority) || priority < 1 || priority > 5);
+
+    const isDoneInvalid = done !== undefined && typeof done !== 'boolean';
+
+    const areThereAdditionalKeys = Object.keys(body).find(
+      (key) => key !== 'text' && key !== 'priority' && key !== 'done'
+    );
+
+    return (
+      isTextInvalid ||
+      isPriorityInvalid ||
+      isDoneInvalid ||
+      areThereAdditionalKeys
+    );
   }
 }
 
