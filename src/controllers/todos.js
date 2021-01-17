@@ -8,7 +8,10 @@ class TodosController {
   static createNewTodo(req, res) {
     const { text, priority, done } = req.body;
 
-    if (TodosController._isInputInvalid(req.body)) {
+    if (
+      TodosController._isTextFieldMissing(text) ||
+      TodosController._isAnyInputInvalid(req.body)
+    ) {
       return res.status(400).send({ message: 'Invalid input.' });
     }
 
@@ -20,33 +23,73 @@ class TodosController {
   static getTodo(req, res) {
     const todo = Todo.get(req.params.id);
 
-    if (todo) {
-      res.status(200).send(todo);
-    } else {
-      res.status(404).json({ message: 'Todo not found with the given id.' });
+    if (!todo) {
+      return res
+        .status(404)
+        .json({ message: 'Todo not found with the given id.' });
     }
+
+    res.status(200).send(todo);
   }
 
-  static _isInputInvalid(body) {
+  static updateTodo(req, res) {
+    if (
+      TodosController._isBodyEmpty(req.body) ||
+      TodosController._isAnyInputInvalid(req.body)
+    ) {
+      return res.status(400).send({ message: 'Invalid input.' });
+    }
+
+    const todo = Todo.get(req.params.id);
+
+    if (!todo) {
+      return res
+        .status(404)
+        .json({ message: 'Todo not found with the given id.' });
+    }
+
+    const updatedTodo = { ...todo, ...req.body };
+    Todo.update(updatedTodo);
+    res.status(200).json(updatedTodo);
+  }
+
+  static _isBodyEmpty(body) {
+    return Object.keys(body).length === 0;
+  }
+
+  static _isTextFieldMissing(text) {
+    return text === undefined;
+  }
+
+  static _isAnyInputInvalid(body) {
     const { text, priority, done } = body;
 
-    const isTextInvalid = !text || text.match(/[^a-zA-Z 0-9]/);
-
-    const isPriorityInvalid =
-      priority !== undefined &&
-      (isNaN(priority) || priority < 1 || priority > 5);
-
-    const isDoneInvalid = done !== undefined && typeof done !== 'boolean';
-
-    const areThereAdditionalKeys = Object.keys(body).find(
-      (key) => key !== 'text' && key !== 'priority' && key !== 'done'
-    );
-
     return (
-      isTextInvalid ||
-      isPriorityInvalid ||
-      isDoneInvalid ||
-      areThereAdditionalKeys
+      TodosController._isTextInvalid(text) ||
+      TodosController._isPriorityInvalid(priority) ||
+      TodosController._isDoneInvalid(done) ||
+      TodosController._areThereAdditionalKeys(body)
+    );
+  }
+
+  static _isTextInvalid(text) {
+    return text !== undefined && (!text.length || text.match(/[^a-zA-Z 0-9]/));
+  }
+
+  static _isPriorityInvalid(priority) {
+    return (
+      priority !== undefined &&
+      (isNaN(priority) || priority < 1 || priority > 5)
+    );
+  }
+
+  static _isDoneInvalid(done) {
+    return done !== undefined && typeof done !== 'boolean';
+  }
+
+  static _areThereAdditionalKeys(body) {
+    return Object.keys(body).find(
+      (key) => key !== 'text' && key !== 'priority' && key !== 'done'
     );
   }
 }

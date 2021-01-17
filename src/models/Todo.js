@@ -28,9 +28,19 @@ class Todo {
     };
 
     collection.push(newTodo);
-    fs.writeFileSync(collectionName, JSON.stringify(collection));
+    this._persist(collection);
 
     return newTodo;
+  }
+
+  static update(todo) {
+    const index = collection.findIndex((item) => item.id === todo.id);
+    collection[index] = todo;
+    this._persist(collection);
+  }
+
+  static _persist(collection) {
+    fs.writeFileSync(collectionName, JSON.stringify(collection));
   }
 }
 
