@@ -2,6 +2,21 @@
 
 This is my second homework for [Digital Natives](https://www.digitalnatives.hu).
 
+For the first one, go to the [numbers-to-words](https://github.com/gergooo/digitalnatives-assessment/tree/numbers-to-words) branch.
+
+Please see the original instructions on the bottom.
+
+## Implementation
+
+The implementation is based on the `Express` framework, on `fs` as "db" and on `uuid` as the unique id generator.
+
+You asked for unit tests in the instructions. Regarding REST APIs, I've found two approaches on what a unit is:
+
+- the usual explanation: one unit is one file/class/etc.,
+- and another, rather interesting one: one unit is one endpoint.
+
+While I agree that testing an endpoint is rather an integration test, since it can cover external dependencies (including db) if they are not mocked, I used this second approach as it looked very descriptive, with the help of `Mocha`, `Chai`, `Chai-Http` and `@sinonjs/fake-timers` in a test-driven fashion, supported by `Postman` for additional manual testing.
+
 ## Original instructions
 
 > ## Instructions
