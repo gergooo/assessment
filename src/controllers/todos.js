@@ -3,19 +3,21 @@ const {
   scheduleForDeletion,
   cancelDeletionSchedule,
 } = require('../services/removing-finished-todos');
+const HttpError = require('../utils/HttpError');
+
 class TodosController {
   static getAllTodos(req, res) {
     res.json(Todo.getAll());
   }
 
-  static createNewTodo(req, res) {
+  static createNewTodo(req, res, next) {
     const { text, priority, done } = req.body;
 
     if (
       TodosController._isTextFieldMissing(text) ||
       TodosController._isAnyInputInvalid(req.body)
     ) {
-      return res.status(400).send({ message: 'Invalid input.' });
+      return next(new HttpError(400, 'Invalid input.'));
     }
 
     const newTodo = Todo.new(text, priority, done);
@@ -27,32 +29,28 @@ class TodosController {
     res.status(201).json(newTodo);
   }
 
-  static getTodo(req, res) {
+  static getTodo(req, res, next) {
     const todo = Todo.get(req.params.id);
 
     if (!todo) {
-      return res
-        .status(404)
-        .json({ message: 'Todo not found with the given id.' });
+      return next(new HttpError(404, 'Todo not found with the given id.'));
     }
 
     res.status(200).send(todo);
   }
 
-  static updateTodo(req, res) {
+  static updateTodo(req, res, next) {
     if (
       TodosController._isBodyEmpty(req.body) ||
       TodosController._isAnyInputInvalid(req.body)
     ) {
-      return res.status(400).send({ message: 'Invalid input.' });
+      return next(new HttpError(400, 'Invalid input.'));
     }
 
     const todo = Todo.get(req.params.id);
 
     if (!todo) {
-      return res
-        .status(404)
-        .json({ message: 'Todo not found with the given id.' });
+      return next(new HttpError(404, 'Todo not found with the given id.'));
     }
 
     const updatedTodo = { ...todo, ...req.body };
@@ -67,11 +65,9 @@ class TodosController {
     res.status(200).json(updatedTodo);
   }
 
-  static deleteTodo(req, res) {
+  static deleteTodo(req, res, next) {
     if (!Todo.get(req.params.id)) {
-      return res
-        .status(404)
-        .json({ message: 'Todo not found with the given id.' });
+      return next(new HttpError(404, 'Todo not found with the given id.'));
     }
 
     Todo.delete(req.params.id);

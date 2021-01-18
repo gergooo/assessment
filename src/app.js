@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const todosRoutes = require('./routes/todos');
+const HttpError = require('./utils/HttpError');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -9,8 +10,8 @@ app.use(bodyParser.json());
 
 app.use('/todos', todosRoutes);
 
-function wrongPathHandler(req, res) {
-  res.status(404).json({ message: 'You are on the wrong path.' });
+function wrongPathHandler(req, res, next) {
+  return next(new HttpError(404, 'You are on the wrong path.'));
 }
 app.use(wrongPathHandler);
 
