@@ -1,6 +1,6 @@
 # JavaScript/Front-end Developer - Exercise 1
 
-This is my fisrt homework for [Digital Natives](https://www.digitalnatives.hu).
+This is my first homework for [Digital Natives](https://www.digitalnatives.hu).
 
 [Click here to see it in action!](https://gergooo.github.io/digitalnatives-assessment/)
 
