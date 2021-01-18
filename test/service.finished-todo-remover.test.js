@@ -1,15 +1,9 @@
-const { startServer, chai, collection, clock } = require('./setup');
+const { server, chai, collection, clock } = require('./setup');
 const {
   scheduleAllDoneTodosForDeletion,
 } = require('../src/services/removing-finished-todos');
 
 describe('Finished todo remover service', function () {
-  let server;
-
-  before(function () {
-    server = startServer();
-  });
-
   it('removes a newly created finished todo after 5 minutes', function () {
     return chai
       .request(server)
@@ -89,9 +83,5 @@ describe('Finished todo remover service', function () {
 
     clock.tick(1 * 1000);
     chai.expect(collection.getTodo(id)).to.not.exist;
-  });
-
-  after(function () {
-    server.close();
   });
 });

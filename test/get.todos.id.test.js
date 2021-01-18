@@ -1,12 +1,6 @@
-const { startServer, chai } = require('./setup');
+const { server, chai } = require('./setup');
 
 describe('GET /todos/:id', function () {
-  let server;
-
-  before(function () {
-    server = startServer();
-  });
-
   it('returns status code 200 if found', function () {
     return chai
       .request(server)
@@ -41,9 +35,5 @@ describe('GET /todos/:id', function () {
           message: 'Todo not found with the given id.',
         });
       });
-  });
-
-  after(function () {
-    server.close();
   });
 });

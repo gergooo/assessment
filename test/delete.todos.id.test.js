@@ -1,12 +1,9 @@
-const { startServer, chai, collection } = require('./setup');
+const { server, chai, collection } = require('./setup');
 
 describe('DELETE /todos/:id', function () {
-  let server;
   let id;
 
   before(function () {
-    server = startServer();
-
     return chai
       .request(server)
       .post('/todos')
@@ -36,13 +33,7 @@ describe('DELETE /todos/:id', function () {
   it('returns 404 when there is no such todo', function () {
     return chai
       .request(server)
-      .delete(`/todos/no-such-todo`)
-      .then((res) => {
-        res.should.have.status(404);
-      });
-  });
-
-  after(function () {
-    server.close();
+      .delete(`/todos/${id}`)
+      .then((res) => res.should.have.status(404));
   });
 });

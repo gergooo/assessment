@@ -1,12 +1,6 @@
-const { startServer, chai, collection } = require('./setup');
+const { server, chai, collection } = require('./setup');
 
 describe('POST /todos', function () {
-  let server;
-
-  before(function () {
-    server = startServer();
-  });
-
   it('returns the new todo in JSON format', function () {
     return chai
       .request(server)
@@ -186,9 +180,5 @@ describe('POST /todos', function () {
           });
       });
     });
-  });
-
-  after(function () {
-    server.close();
   });
 });

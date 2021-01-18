@@ -13,16 +13,18 @@ let collection = new CollectionWrapper(COLLECTION_NAME, [
   { id: '2', text: 'do the 2nd assessment', priority: 2, done: false },
 ]);
 
-let server;
 function startServer() {
   process.env.PORT = 666;
   process.env.COLLECTION = COLLECTION_NAME;
-  ({ server } = require('../src/app'));
+  let { server } = require('../src/app');
   return server;
 }
 
+const server = startServer();
+
 after(function () {
+  server.close();
   clock.uninstall();
 });
 
-module.exports = { startServer, chai, collection, clock };
+module.exports = { server, chai, collection, clock };

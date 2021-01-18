@@ -1,12 +1,6 @@
-const { startServer, chai } = require('./setup');
+const { server, chai } = require('./setup');
 
 describe('Error handling', function () {
-  let server;
-
-  before(function () {
-    server = startServer();
-  });
-
   it('default error handler', function () {
     return chai
       .request(server)
@@ -27,9 +21,5 @@ describe('Error handling', function () {
         res.should.have.status(404);
         res.body.should.contain({ message: 'You are on the wrong path.' });
       });
-  });
-
-  after(function () {
-    server.close();
   });
 });

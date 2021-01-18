@@ -1,12 +1,9 @@
-const { startServer, chai, collection } = require('./setup');
+const { server, chai, collection } = require('./setup');
 
 describe('PUT /todos/:id', function () {
-  let server;
   let id;
 
   before(function () {
-    server = startServer();
-
     return chai
       .request(server)
       .post('/todos')
@@ -130,9 +127,5 @@ describe('PUT /todos/:id', function () {
           });
       });
     });
-  });
-
-  after(function () {
-    server.close();
   });
 });
