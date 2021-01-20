@@ -17,6 +17,8 @@ You asked for unit tests in the instructions. Regarding REST APIs, I've found tw
 
 While I agree that testing an endpoint is rather an integration test, since it can cover external dependencies (including db) if they are not mocked, I used this second approach as it looked very descriptive, with the help of `Mocha`, `Chai`, `Chai-Http` and `@sinonjs/fake-timers` in a test-driven fashion, supported by `Postman` for additional manual testing.
 
+**Note:** for the endpoint `DELETE /todos/:id`, the test case for a non-existing id fails. It works with Postman, but in the test environment, the error passed to the `next()` function doesn't get to the error handler function and the test fails with a timeout. I don't know why this happens, maybe there is an issue with the implementation of the `delete()` method in `Chai-Http`.
+
 ## Original instructions
 
 > ## Instructions
